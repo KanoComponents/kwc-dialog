@@ -1,0 +1,71 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../kwc-style/button.html">
+<link rel="import" href="../kwc-style/color.html">
+
+<!--
+`kwc-dialog-toolbar`
+A toolbar for for kwc-dialog.
+
+@demo demo/index.html
+-->
+
+<dom-module id="kwc-dialog-toolbar">
+    <template>
+        <style>
+            :host {
+                display: block;
+
+                @apply --layout-horizontal;
+
+                font-family: 'Bariol', sans-serif;
+
+                padding: 15px 20px;
+            }
+
+            h2 {
+                margin: auto 15px;
+                @apply --layout-flex;
+            }
+
+            .actions button.primary, .actions button.secondary,
+            .actions ::slotted(button.primary), .actions ::slotted(button.secondary) {
+                @apply --kano-button;
+                background: #9fa4a8;
+                transition: opacity 200ms ease-in;
+            }
+
+            .actions ::slotted(button.primary), .actions ::slotted(button.secondary) {
+                margin-left: 3px; 
+            }
+            
+            .actions button.primary:hover, .actions button.secondary:hover,
+            .actions ::slotted(button.primary:hover), .actions ::slotted(button.secondary:hover) {
+                opacity: 0.8;
+            }
+
+            .actions button.primary, .actions ::slotted(button.primary) {
+                background-color: var(--color-orange, #ff6a00);
+            }
+        </style>
+        <h2>{{title}}</h2>
+        <div class="actions">
+            <slot name="actions">
+                <button class="secondary" dialog-dismiss>Cancel</button>
+                <button class="primary" dialog-confirm>Done</button>
+            </slot>
+        </div>
+
+    </template>
+
+    <script>
+        Polymer({
+            is: 'kwc-dialog-toolbar',
+            properties: {
+                title: {
+                    type: String
+                }
+            }
+        });
+    </script>
+</dom-module>

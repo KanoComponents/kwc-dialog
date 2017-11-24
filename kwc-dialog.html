@@ -1,0 +1,97 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-dialog-behavior/paper-dialog-behavior.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+
+<link rel="import" href="./kwc-dialog-toolbar.html">
+
+<!--
+`kwc-dialog`
+A customizable dialog with two buttons and slottable content.
+
+### Examples
+
+Basic:
+
+```
+<kwc-dialog title="Example dialog"></kwc-dialog>
+```
+
+With custom buttons:
+
+```
+<kwc-dialog title="Example dialog">
+    <button class="primary" dialog-confirm>Yes</button>
+    <button class="secondary" dialog-dismiss>No</button>
+</kwc-dialog>
+```
+
+@demo demo/index.html
+-->
+
+<dom-module id="kwc-dialog">
+    <template>
+        <style>
+            :host {
+                background: white;
+                width: 600px;
+                max-height: 80%;
+
+                @apply --layout-vertical;
+
+                border-radius: 10px;
+                overflow: hidden;
+            }
+
+            kwc-dialog-toolbar {
+                border-bottom: 1px solid #eaeaea;
+                @apply --layout-flex-none;
+            }
+
+            .content {
+                overflow-y: scroll;
+            }
+
+            .content ::slotted(*) {
+                @apply --layout-flex;
+            }
+        </style>
+        <kwc-dialog-toolbar title="{{title}}">
+            <slot name="actions" slot="actions"></slot>
+        </kwc-dialog-toolbar>
+        <div class="content">
+            <slot name="content"></slot>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'kwc-dialog',
+
+            /**
+             * Fired when user dismisses dialog.
+             *
+             * @event dismiss
+             */
+
+
+            /**
+             * Fired when user confirms dialog.
+             *
+             * @event confirm
+             */
+
+            behaviors: [
+                Polymer.PaperDialogBehavior
+            ],
+            properties: {
+                title: {
+                    type: String
+                }
+            },
+            _updateClosingReasonConfirmed (confirmed) {
+                Polymer.PaperDialogBehaviorImpl._updateClosingReasonConfirmed(confirmed);
+                this.fire(confirmed ? 'confirm': 'dismiss');
+            }
+        });
+    </script>
+</dom-module>
