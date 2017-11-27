@@ -31,7 +31,7 @@ A toolbar for for kwc-dialog.
             .actions button.primary, .actions button.secondary,
             .actions ::slotted(button.primary), .actions ::slotted(button.secondary) {
                 @apply --kano-button;
-                background: #9fa4a8;
+                background: var(--kwc-dialog-secondary-color, #9fa4a8);
                 transition: opacity 200ms ease-in;
             }
 
@@ -45,7 +45,7 @@ A toolbar for for kwc-dialog.
             }
 
             .actions button.primary, .actions ::slotted(button.primary) {
-                background-color: var(--color-orange, #ff6a00);
+                background-color: var(--kwc-dialog-primary-color, --color-kano-orange);
             }
         </style>
         <h2>{{title}}</h2>

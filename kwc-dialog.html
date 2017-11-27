@@ -5,25 +5,35 @@
 <link rel="import" href="./kwc-dialog-toolbar.html">
 
 <!--
-`kwc-dialog`
-A customizable dialog with two buttons and slottable content.
+`kwc-dialog` is customizable modal dialog component with two buttons and slottable content.
 
 ### Examples
 
 Basic:
 
 ```
-<kwc-dialog title="Example dialog"></kwc-dialog>
+<kwc-dialog title="Example dialog">
+    <div>content here</div>
+</kwc-dialog>
 ```
 
 With custom buttons:
 
 ```
 <kwc-dialog title="Example dialog">
-    <button class="primary" dialog-confirm>Yes</button>
-    <button class="secondary" dialog-dismiss>No</button>
+    <button class="primary" dialog-confirm slot="actions">Yes</button>
+    <button class="secondary" dialog-dismiss slot="actions">No</button>
+
+    <div>content here</div>
 </kwc-dialog>
 ```
+
+### Styling
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--kwc-dialog-primary-color` | Color of primary buttons | --color-kano-orange
+`--kwc-dialog-secondary-color` | Color of secondary buttons | #9fa4a8
 
 @demo demo/index.html
 -->
@@ -38,7 +48,7 @@ With custom buttons:
 
                 @apply --layout-vertical;
 
-                border-radius: 10px;
+                border-radius: 7px;
                 overflow: hidden;
             }
 
@@ -59,7 +69,7 @@ With custom buttons:
             <slot name="actions" slot="actions"></slot>
         </kwc-dialog-toolbar>
         <div class="content">
-            <slot name="content"></slot>
+            <slot></slot>
         </div>
     </template>
 

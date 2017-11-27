@@ -1,5 +1,7 @@
 # \<kwc-dialog\>
 
+[Demo and API docs](https://components.kano.me/#/elements/kwc-dialog)
+
 A customizable dialog with two buttons and slottable content.
 
  - What is it called?

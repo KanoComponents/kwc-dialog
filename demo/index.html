@@ -26,23 +26,65 @@
       <h3>Basic kwc-dialog demo</h3>
       <demo-snippet>
         <template>
-          <style>
+          <style is="custom-style">
               .dialog-content {
                   background: #eaeaea;
                   height: 700px;
                   margin: 20px;
               }
           </style>
-          <button id="toggle">Toggle dialog</button>
-          <kwc-dialog id="dialog" title="Example dialog" with-backdrop>
-              <div class="dialog-content" slot="content">
+          <button id="toggle1">Toggle dialog</button>
+          <kwc-dialog id="dialog1" title="Example dialog" with-backdrop>
+              <div class="dialog-content">
               </div>
           </kwc-dialog>
 
           <script type="text/javascript">
               document.addEventListener('WebComponentsReady', () => {
-                  var dialog = document.getElementById('dialog'),
-                      toggle = document.getElementById('toggle');
+                  var dialog = document.getElementById('dialog1'),
+                      toggle = document.getElementById('toggle1');
+
+                  toggle.addEventListener('click', function() {
+                      dialog.opened ? dialog.close() : dialog.open();
+                  })
+                  dialog.addEventListener('dismiss', function() {
+                      console.log('dismiss event fired');
+                  });
+                  dialog.addEventListener('confirm', function() {
+                      console.log('confirm event fired');
+                  });
+              });
+        </script>
+        </template>
+      </demo-snippet>
+
+      <h3>Using custom buttons</h3>
+      <demo-snippet>
+        <template>
+          <style is="custom-style">
+              .dialog-content {
+                  background: #eaeaea;
+                  height: 700px;
+                  margin: 20px;
+              }
+
+              kwc-dialog#dialog2 {
+                  --kwc-dialog-primary-color: green;
+                  --kwc-dialog-secondary-color: red;
+              }
+          </style>
+          <button id="toggle2">Toggle dialog</button>
+          <kwc-dialog id="dialog2" title="With custom buttons" with-backdrop>
+              <button class="primary" dialog-confirm slot="actions">Yo</button>
+              <button class="secondary" dialog-dismiss slot="actions">Nah</button>
+              <div class="dialog-content">
+              </div>
+          </kwc-dialog>
+
+          <script type="text/javascript">
+              document.addEventListener('WebComponentsReady', () => {
+                  var dialog = document.getElementById('dialog2'),
+                      toggle = document.getElementById('toggle2');
 
                   toggle.addEventListener('click', function() {
                       dialog.opened ? dialog.close() : dialog.open();
