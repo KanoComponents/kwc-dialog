@@ -1,23 +1,11 @@
-# \<kwc-dialog\>
+_[Demo and API docs](https://components.kano.me/#/elements/kwc-dialog)_
 
-[Demo and API docs](https://components.kano.me/#/elements/kwc-dialog)
+## \<kwc-dialog\>
 
 A customizable dialog with two buttons and slottable content.
 
- - What is it called?
-     - kwc-dialog
- - What is it made out of?
-     - Describe here the contents of this component
- - What variants are needed?
-     - Variant 1:
-     - Variant 2:
-     - Variant 3:
- - How does it scale?
-     - Desktop: ...
-     - Mobile: ...
- - What style variables are in use?
-     - Style 1: ...
-     - Style 2: ...
+<img width="825" alt="screen shot 2017-11-27 at 11 28 32" src="https://user-images.githubusercontent.com/169328/33264684-8408927c-d366-11e7-9099-c4f484503c09.png">
+
 
 ## Installation
 Clone this repository.
