@@ -61,13 +61,52 @@ Custom property | Description | Default
                 overflow-y: scroll;
             }
 
-            .content ::slotted(*) {
+            .content * {
                 @apply --layout-flex;
             }
+
+            .toolbar {
+                @apply --layout-horizontal;
+
+                font-family: 'Bariol', sans-serif;
+
+                padding: 15px 20px;
+            }
+
+            .toolbar h2 {
+                margin: auto 15px;
+                @apply --layout-flex;
+            }
+
+            .actions button.primary, .actions button.secondary,
+            .actions ::slotted(button.primary), .actions ::slotted(button.secondary) {
+                @apply --kano-button;
+                background: var(--kwc-dialog-secondary-color, #9fa4a8);
+                transition: opacity 200ms ease-in;
+            }
+
+            .actions ::slotted(button.primary), .actions ::slotted(button.secondary) {
+                margin-left: 3px;
+            }
+
+            .actions button.primary:hover, .actions button.secondary:hover,
+            .actions ::slotted(button.primary:hover), .actions ::slotted(button.secondary:hover) {
+                opacity: 0.8;
+            }
+
+            .actions button.primary, .actions ::slotted(button.primary) {
+                background-color: var(--kwc-dialog-primary-color, var(--color-kano-orange));
+            }
         </style>
-        <kwc-dialog-toolbar title="{{title}}">
-            <slot name="actions" slot="actions"></slot>
-        </kwc-dialog-toolbar>
+        <div class="toolbar">
+            <h2>{{title}}</h2>
+            <div class="actions">
+                <slot name="actions">
+                    <button class="secondary" dialog-dismiss>Cancel</button>
+                    <button class="primary" dialog-confirm>Done</button>
+                </slot>
+            </div>
+        </div>
         <div class="content">
             <slot></slot>
         </div>
@@ -96,6 +135,12 @@ Custom property | Description | Default
             properties: {
                 title: {
                     type: String
+                },
+                withBackdrop: {
+                    type: Boolean
+                },
+                modal: {
+                    type: Boolean
                 }
             },
             _updateClosingReasonConfirmed (confirmed) {

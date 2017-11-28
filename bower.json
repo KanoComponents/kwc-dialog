@@ -6,7 +6,7 @@
     "polymer": "Polymer/polymer#^1.9.0",
     "paper-dialog-behavior": "^2.0.1",
     "iron-flex-layout": "^2.0.1",
-    "kwc-style": "KanoComponents/kwc-style#^1.2.1"
+    "kwc-style": "KanoComponents/kwc-style#^1.x"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
