@@ -72,6 +72,12 @@
                   --kwc-dialog-primary-color: green;
                   --kwc-dialog-secondary-color: red;
               }
+
+              kwc-dialog#dialog2 {
+                  --kwc-dialog-content-wrapper: {
+                    background: red;
+                  }
+              }
           </style>
           <button id="toggle2">Toggle dialog</button>
           <kwc-dialog id="dialog2" title="With custom buttons" with-backdrop>

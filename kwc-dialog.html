@@ -1,6 +1,8 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-dialog-behavior/paper-dialog-behavior.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../kwc-style/button.html">
+<link rel="import" href="../kwc-style/color.html">
 
 <!--
 `kwc-dialog` is customizable modal dialog component with two buttons and slottable content.
@@ -31,7 +33,10 @@ With custom buttons:
 Custom property | Description | Default
 ----------------|-------------|----------
 `--kwc-dialog-primary-color` | Color of primary buttons | --color-kano-orange
+`--kwc-dialog-primary-hover-color` | Hover color of primary buttons | --color-kano-orange
 `--kwc-dialog-secondary-color` | Color of secondary buttons | #9fa4a8
+`--kwc-dialog-secondary-hover-color` | Hover color of secondary buttons | #9fa4a8
+`--kwc-dialog-content-wrapper` | Mixin applied to main content wrapper | {}
 
 @demo demo/index.html
 -->
@@ -41,17 +46,23 @@ Custom property | Description | Default
         <style>
             :host {
                 background: white;
-                width: 600px;
-                max-height: 80%;
+                width: calc(100% - 20px);
+                min-width: 300px;
+                max-width: 600px;
+                height: 80%;
+                max-height: 600px;
 
                 @apply --layout-vertical;
 
                 border-radius: 7px;
                 overflow: hidden;
+
+                box-shadow: 4px 4px 4px 0px rgba(0,0,0,0.15);
             }
 
             .content {
                 overflow-y: scroll;
+                @apply --kwc-dialog-content-wrapper;
             }
 
             .content * {
@@ -70,36 +81,58 @@ Custom property | Description | Default
             }
 
             .toolbar h2 {
-                margin: auto 15px;
+                margin: auto 15px auto 0px;
                 @apply --layout-flex;
+                color: var(--color-chateau, #414A51);
             }
 
             .actions button.primary, .actions button.secondary,
             .actions ::slotted(button.primary), .actions ::slotted(button.secondary) {
                 @apply --kano-button;
-                background: var(--kwc-dialog-secondary-color, #9fa4a8);
-                transition: opacity 200ms ease-in;
+                background-color: var(--kwc-dialog-secondary-color, #9fa4a8);
+                transition: all 200ms ease-in;
+                margin-left: 16px;
             }
 
-            .actions ::slotted(button.primary), .actions ::slotted(button.secondary) {
-                margin-left: 3px;
+            .actions button.primary:first-child, .actions button.secondary:first-child,
+            .actions ::slotted(button.primary:first-child), .actions ::slotted(button.secondary:first-child) {
+                margin-left: 0px;
             }
 
-            .actions button.primary:hover, .actions button.secondary:hover,
-            .actions ::slotted(button.primary:hover), .actions ::slotted(button.secondary:hover) {
-                opacity: 0.8;
+            .actions button.primary:hover,
+            .actions ::slotted(button.primary:hover) {
+                background-color: var(--kwc-dialog-primary-hover-color, #c95924);
+                color: #f0f0f0;
+            }
+
+            .actions button.secondary:hover,
+            .actions ::slotted(button.secondary:hover) {
+                background-color: var(--kwc-dialog-secondary-hover-color, #7f8386);
+                color: #f0f0f0;
             }
 
             .actions button.primary, .actions ::slotted(button.primary) {
                 background-color: var(--kwc-dialog-primary-color, var(--color-kano-orange));
+            }
+
+            @media only screen and (max-width: 420px) {
+                h2 {
+                    font-size: 16px;
+                }
+
+                .actions button,
+                .actions ::slotted(button.primary),
+                .actions ::slotted(button.secondary) {
+                    font-size: 12px !important;
+                    padding: 8px 15px !important;
+                }
             }
         </style>
         <div class="toolbar">
             <h2>{{title}}</h2>
             <div class="actions">
                 <slot name="actions">
-                    <button class="secondary" dialog-dismiss>Cancel</button>
-                    <button class="primary" dialog-confirm>Done</button>
+                    <button class="secondary" dialog-dismiss>Cancel</button><button class="primary" dialog-confirm>Done</button>
                 </slot>
             </div>
         </div>
