@@ -1,5 +1,4 @@
 <link rel="import" href="../../polymer/polymer-element.html">
-<link rel="import" href="../../iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../kwc-style/button.html">
 <link rel="import" href="../../kwc-style/color.html">
 
@@ -47,18 +46,15 @@ Custom property | Description | Default
         <style>
             :host {
                 border-bottom: 1px solid #eaeaea;
-                @apply --layout-flex-none;
-
-                @apply --layout-horizontal;
-
+                display: flex;
+                flex-direction: row;
                 font-family: 'Bariol', sans-serif;
-
                 padding: 15px 20px;
             }
 
             h2 {
                 margin: auto 15px auto 15px;
-                @apply --layout-flex;
+                flex: 1;
                 color: var(--color-chateau, #414A51);
                 font-size: 20px;
             }
@@ -120,27 +116,26 @@ Custom property | Description | Default
             </slot>
         </div>
     </template>
-
-    <script>
-        class KWCDialogConfirmHeader extends Polymer.Element {
-            static get is() { return 'kwc-dialog-confirm-header'; }
-            static get properties() {
-                return {
-                    title: {
-                        type: String,
-                    },
-                    dismissLabel: {
-                        type: String,
-                        value: 'Cancel',
-                    },
-                    confirmLabel: {
-                        type: String,
-                        value: 'Done',
-                    },
-                };
-            }
-        }
-
-        customElements.define(KWCDialogConfirmHeader.is, KWCDialogConfirmHeader);
-    </script>
 </dom-module>
+<script>
+    class KWCDialogConfirmHeader extends Polymer.Element {
+        static get is() { return 'kwc-dialog-confirm-header'; }
+        static get properties() {
+            return {
+                title: {
+                    type: String,
+                },
+                dismissLabel: {
+                    type: String,
+                    value: 'Cancel',
+                },
+                confirmLabel: {
+                    type: String,
+                    value: 'Done',
+                },
+            };
+        }
+    }
+
+    customElements.define(KWCDialogConfirmHeader.is, KWCDialogConfirmHeader);
+</script>

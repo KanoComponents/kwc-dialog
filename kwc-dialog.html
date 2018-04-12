@@ -1,8 +1,5 @@
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../paper-dialog-behavior/paper-dialog-behavior.html">
-<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
-<link rel="import" href="../kwc-style/button.html">
-<link rel="import" href="../kwc-style/color.html">
 
 <!--
 `kwc-dialog` is customizable modal dialog component with Kano's dialog style embedded
@@ -37,8 +34,8 @@ Custom property | Description | Default
                 max-width: 600px;
                 height: 80%;
                 max-height: 600px;
-
-                @apply --layout-vertical;
+                display: flex;
+                flex-direction: column;
 
                 border-radius: 7px;
                 overflow: hidden;
@@ -53,7 +50,7 @@ Custom property | Description | Default
                 @apply --kwc-dialog-content;
             }
             .content * {
-                @apply --layout-flex;
+                flex: 1;
             }
         </style>
         <div class="header">
@@ -63,31 +60,11 @@ Custom property | Description | Default
             <slot name="content"></slot>
         </div>
     </template>
-
-    <script>
-        Polymer({
-            is: 'kwc-dialog',
-
-            /**
-             * Fired when user dismisses dialog.
-             *
-             * @event dismiss
-             */
-
-
-            /**
-             * Fired when user confirms dialog.
-             *
-             * @event confirm
-             */
-
-            behaviors: [
-                Polymer.PaperDialogBehavior
-            ],
-            _updateClosingReasonConfirmed (confirmed) {
-                Polymer.PaperDialogBehaviorImpl._updateClosingReasonConfirmed(confirmed);
-                this.fire(confirmed ? 'confirm': 'dismiss');
-            }
-        });
-    </script>
 </dom-module>
+<script>
+    class KWCDialog extends Polymer.mixinBehaviors([Polymer.PaperDialogBehavior], Polymer.Element) {
+        static get is() { return 'kwc-dialog'; }
+    }
+    
+    customElements.define(KWCDialog.is, KWCDialog);
+</script>

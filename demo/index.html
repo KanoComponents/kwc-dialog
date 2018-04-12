@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
@@ -18,45 +19,39 @@
     <link rel="import" href="../kwc-dialog.html">
 
     <custom-style>
-      <style is="custom-style" include="demo-pages-shared-styles"></style>
+        <style is="custom-style" include="demo-pages-shared-styles"></style>
     </custom-style>
-  </head>
-  <body>
+</head>
+
+<body>
     <div class="vertical-section-container centered">
-      <h3>Basic kwc-dialog demo</h3>
-      <demo-snippet>
-        <template>
-          <style is="custom-style">
-              .dialog-content {
-                  background: #eaeaea;
-                  height: 700px;
-                  margin: 20px;
-              }
-          </style>
-          <button id="toggle1">Toggle dialog</button>
-          <kwc-dialog id="dialog1" title="Example dialog" with-backdrop>
-              <div class="dialog-content">
-              </div>
-          </kwc-dialog>
+        <h3>Basic kwc-dialog demo</h3>
+        <demo-snippet>
+            <template>
+                <style is="custom-style">
+                    .dialog-content {
+                        background: #eaeaea;
+                        height: 700px;
+                        margin: 20px;
+                    }
+                </style>
+                <button id="toggle1">Toggle dialog</button>
+                <kwc-dialog id="dialog1" title="Example dialog" with-backdrop>
+                    <div class="dialog-content">
+                    </div>
+                </kwc-dialog>
 
-          <script type="text/javascript">
-              document.addEventListener('WebComponentsReady', () => {
-                  var dialog = document.getElementById('dialog1'),
-                      toggle = document.getElementById('toggle1');
+                <script type="text/javascript">
+                    document.addEventListener('WebComponentsReady', () => {
+                        const dialog = document.getElementById('dialog1');
+                        const toggle = document.getElementById('toggle1');
 
-                  toggle.addEventListener('click', function() {
-                      dialog.opened ? dialog.close() : dialog.open();
-                  })
-                  dialog.addEventListener('dismiss', function() {
-                      console.log('dismiss event fired');
-                  });
-                  dialog.addEventListener('confirm', function() {
-                      console.log('confirm event fired');
-                  });
-              });
-        </script>
-        </template>
-      </demo-snippet>
+                        toggle.addEventListener('click', () => dialog.toggle());
+                    });
+                </script>
+            </template>
+        </demo-snippet>
     </div>
-  </body>
+</body>
+
 </html>

@@ -46,18 +46,10 @@
 
                 <script type="text/javascript">
                     document.addEventListener('WebComponentsReady', () => {
-                        var dialog = document.getElementById('dialog1'),
-                            toggle = document.getElementById('toggle1');
+                        const dialog = document.getElementById('dialog1');
+                        const toggle = document.getElementById('toggle1');
 
-                        toggle.addEventListener('click', function () {
-                            dialog.opened ? dialog.close() : dialog.open();
-                        })
-                        dialog.addEventListener('dismiss', function () {
-                            console.log('dismiss event fired');
-                        });
-                        dialog.addEventListener('confirm', function () {
-                            console.log('confirm event fired');
-                        });
+                        toggle.addEventListener('click', () => dialog.toggle());
                     });
                 </script>
             </template>
@@ -96,18 +88,10 @@
 
                 <script type="text/javascript">
                     document.addEventListener('WebComponentsReady', () => {
-                        var dialog = document.getElementById('dialog2'),
-                            toggle = document.getElementById('toggle2');
+                        const dialog = document.getElementById('dialog2');
+                        const toggle = document.getElementById('toggle2');
 
-                        toggle.addEventListener('click', function () {
-                            dialog.opened ? dialog.close() : dialog.open();
-                        })
-                        dialog.addEventListener('dismiss', function () {
-                            console.log('dismiss event fired');
-                        });
-                        dialog.addEventListener('confirm', function () {
-                            console.log('confirm event fired');
-                        });
+                        toggle.addEventListener('click', () => dialog.toggle());
                     });
                 </script>
             </template>
