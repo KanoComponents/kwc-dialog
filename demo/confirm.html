@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>kwc-dialog demo</title>
+
+    <script>
+        window.Polymer = {
+            dom: 'shadow'
+        };
+    </script>
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../kwc-dialog.html">
+    <link rel="import" href="../headers/kwc-dialog-confirm-header.html">
+
+    <custom-style>
+        <style is="custom-style" include="demo-pages-shared-styles"></style>
+    </custom-style>
+</head>
+
+<body>
+    <div class="vertical-section-container centered">
+        <h3>Basic kwc-dialog demo</h3>
+        <demo-snippet>
+            <template>
+                <custom-style>
+                    <style is="custom-style">
+                        .dialog-content {
+                            background: #eaeaea;
+                            height: 700px;
+                            margin: 20px;
+                        }
+                    </style>
+                </custom-style>
+                <button id="toggle1">Toggle dialog</button>
+                <kwc-dialog id="dialog1" with-backdrop>
+                    <kwc-dialog-confirm-header title="Example dialog" slot="header"></kwc-dialog-confirm-header>
+                    <div class="dialog-content" slot="content"></div>
+                </kwc-dialog>
+
+                <script type="text/javascript">
+                    document.addEventListener('WebComponentsReady', () => {
+                        var dialog = document.getElementById('dialog1'),
+                            toggle = document.getElementById('toggle1');
+
+                        toggle.addEventListener('click', function () {
+                            dialog.opened ? dialog.close() : dialog.open();
+                        })
+                        dialog.addEventListener('dismiss', function () {
+                            console.log('dismiss event fired');
+                        });
+                        dialog.addEventListener('confirm', function () {
+                            console.log('confirm event fired');
+                        });
+                    });
+                </script>
+            </template>
+        </demo-snippet>
+        <h3>Using custom buttons</h3>
+        <demo-snippet>
+            <template>
+                <custom-style>
+                    <style>
+                        .dialog-content {
+                            background: #eaeaea;
+                            height: 700px;
+                            margin: 20px;
+                        }
+
+                        kwc-dialog#dialog2 {
+                            --kwc-dialog-confirm-header-primary-color: green;
+                            --kwc-dialog-confirm-header-secondary-color: red;
+                        }
+
+                        kwc-dialog#dialog2 {
+                            --kwc-dialog-content: {
+                                background: red;
+                            };
+                        }
+                    </style>
+                </custom-style>
+                <button id="toggle2">Toggle dialog</button>
+                <kwc-dialog id="dialog2" title="With custom buttons" with-backdrop>
+                    <kwc-dialog-confirm-header title="Example dialog" slot="header">
+                        <button class="primary" dialog-confirm slot="actions">Yo</button>
+                        <button class="secondary" dialog-dismiss slot="actions">Nah</button>
+                    </kwc-dialog-confirm-header>
+                    <div class="dialog-content" slot="content"></div>
+                </kwc-dialog>
+
+                <script type="text/javascript">
+                    document.addEventListener('WebComponentsReady', () => {
+                        var dialog = document.getElementById('dialog2'),
+                            toggle = document.getElementById('toggle2');
+
+                        toggle.addEventListener('click', function () {
+                            dialog.opened ? dialog.close() : dialog.open();
+                        })
+                        dialog.addEventListener('dismiss', function () {
+                            console.log('dismiss event fired');
+                        });
+                        dialog.addEventListener('confirm', function () {
+                            console.log('confirm event fired');
+                        });
+                    });
+                </script>
+            </template>
+        </demo-snippet>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,221 @@
+<link rel="import" href="../../polymer/polymer-element.html">
+<link rel="import" href="../../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../kwc-style/color.html">
+
+<!--
+`kwc-dialog-icon-header` is a header for dialogs with a big icon at the top, and a dismiss icon.
+
+### Examples
+
+Basic:
+
+```
+<kwc-dialog>
+    <kwc-dialog-icon-header slot="header"></kwc-dialog-icon-header>
+    <div slot="content">content here</div>
+</kwc-dialog>
+```
+
+@demo demo/index.html
+-->
+
+<dom-module id="kwc-dialog-icon-header">
+    <template>
+        <style>
+            :host {
+                --color-light-grey: #f4f5f6;
+                --color-text: #253541;
+                display: block;
+                color: var(--color-text);
+                font-family: 'Bariol', sans-serif;
+                margin: 0;
+                overflow: hidden;
+                padding: 0;
+                position: relative;
+                display: flex;
+                @apply --kano-modal-main;
+            }
+            .fadeInUp {
+                animation-duration: 0.1s;
+                animation-name: fadeInUp;
+                animation-fill-mode: both;
+            }
+            .content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                flex: 1;
+                box-sizing: border-box;
+                text-align: center;
+                position: relative;
+            }
+            .backdrop {
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                background-color: var(--color-light-grey);
+                height: calc(calc(110px / 2) + 30px);
+            }
+            .motif {
+                margin-top: 15px;
+                display: block;
+                height: 110px;
+                width: 110px;
+                z-index: 0;
+            }
+            .close-button {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                cursor: pointer;
+                z-index: 10;
+                transition: transform 0.2s ease-in;
+                background: none;
+                border: 0;
+                padding: 0;
+            }
+            .close-button:hover {
+                transform: scale(1.15);
+            }
+            .close-icon {
+                width: 20px;
+            }
+            .float-in {
+                animation: floatIn 180ms ease-out;
+            }
+            .pulse-up {
+                animation: pulseUp 140ms linear;
+            }
+            .pulse-down {
+                animation: pulseDown 100ms linear;
+            }
+            @keyframes floatIn {
+                0% {transform: scale(0.5);}
+                100% {transform: scale(1);}
+            }
+            @keyframes pulseUp {
+                0% {transform: scale(1);}
+                100% {transform: scale(1.15);}
+            }
+            @keyframes pulseDown {
+                0% {transform: scale(1.1);}
+                100% {transform: scale(1);}
+            }
+            [hidden] {
+                display: none !important;
+            }
+        </style>
+        <button class="close-button" hidden$="[[!closable]]" dialog-dismiss>
+            <img class="close-icon" src="[[_modalCloseIcon]]" />
+        </button>
+        <div class="content">
+            <div class="backdrop"></div>
+            <img id="image" class="motif" src="[[motif]]" hidden$="[[!motif]]" />
+            <slot name="content"></slot>
+        </div>
+    </template>
+</dom-module>
+<script>
+    class KWCDialogIconHeader extends Polymer.Element {
+        static get is() { return 'kwc-dialog-icon-header'; }
+        static get properties() {
+                return {
+                /**
+                 * Path for the image placed on the top end of modal
+                 * @type {String}
+                 */
+                motif: {
+                    type: String,
+                    value: null,
+                },
+                /**
+                 * Path to assets to be used by the modal.
+                 * i.e: Icons, avatars, audios and graphics.
+                 * @type {String}
+                 */
+                assetsPath: {
+                    type: String,
+                    value: null,
+                },
+                _modalCloseIcon: {
+                    type: String,
+                    computed: '_computeCloseIcon(assetsPath)',
+                },
+                /**
+                 * Flags if modal has been animated during previous transitions.
+                 * @type {Boolean}
+                 */
+                wasAnimated: {
+                    type: Boolean,
+                    value: false,
+                },
+                /**
+                 * Flags if modal shows an UI for closing it.
+                 * @type {Boolean}
+                 */
+                closable: {
+                    type: Boolean,
+                    value: true,
+                },
+            };
+        }
+        connectedCallback() {
+            super.connectedCallback();
+            this._changeImage = this._changeImage.bind(this);
+        }
+        _computeCloseIcon(assetsPath) {
+            if (assetsPath) {
+                return `${assetsPath}/icons/modal-close-icon.svg`
+            } else {
+                return "data:image/svg+xml,%3Csvg width='45' height='45' viewBox='0 0 45 45' xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EGroup%3C/title%3E%3Cg transform='translate(2 2)' stroke='%23C2C2C2' stroke-width='4' fill='none' fill-rule='evenodd'%3E%3Ccircle cx='20.5' cy='20.5' r='20.5'/%3E%3Cpath d='M14 14l13 13m0-13L14 27' stroke-linecap='round' stroke-linejoin='bevel'/%3E%3C/g%3E%3C/svg%3E"
+            }
+        }
+        /**
+         * Changes `motif` image and perform animations accordingly depending
+         * on if there was an image there before and if it was animated. If
+         * the motif is being swapped, it calls `_changeImage` as a callback
+         * for the transition animation.
+         * @param {String} url Path for the new `motif`
+         */
+        transitionImage(url) {
+            if (!url) {
+                return;
+            }
+            if (this.wasAnimated) {
+                this._resetClasses();
+            }
+            this.newImage = url;
+            this.wasAnimated = true;
+            // There is a motif image already, transition to new, otherwise float in
+            let image = Polymer.dom(this.root).querySelector('#image');
+            if (this.motif) {
+                image.classList.add('pulse-up');
+                image.addEventListener('animationend', this._changeImage);
+            } else {
+                image.classList.add('float-in');
+                this.motif = url;
+            }
+        }
+        /**
+         * Changes `motif` after "pulse-down" animation and removes listener.
+         */
+        _changeImage() {
+            let image = Polymer.dom(this.root).querySelector('#image');
+            image.classList.add('pulse-down');
+            this.motif = this.newImage;
+            image.removeEventListener('animationend', this._changeImage);
+        }
+        /**
+         * Resets transition animation classes.
+         */
+        _resetClasses() {
+            let image = Polymer.dom(this.root).querySelector('#image');
+            image.classList.remove('pulse-down');
+            image.classList.remove('pulse-up');
+            image.classList.remove('float-in');
+        }
+    }
+
+    customElements.define(KWCDialogIconHeader.is, KWCDialogIconHeader);
+</script>

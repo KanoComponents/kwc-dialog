@@ -5,26 +5,15 @@
 <link rel="import" href="../kwc-style/color.html">
 
 <!--
-`kwc-dialog` is customizable modal dialog component with two buttons and slottable content.
+`kwc-dialog` is customizable modal dialog component with Kano's dialog style embedded
 
 ### Examples
 
 Basic:
 
 ```
-<kwc-dialog title="Example dialog">
-    <div>content here</div>
-</kwc-dialog>
-```
-
-With custom buttons:
-
-```
-<kwc-dialog title="Example dialog">
-    <button class="primary" dialog-confirm slot="actions">Yes</button>
-    <button class="secondary" dialog-dismiss slot="actions">No</button>
-
-    <div>content here</div>
+<kwc-dialog>
+    <div slot="content">content here</div>
 </kwc-dialog>
 ```
 
@@ -32,11 +21,8 @@ With custom buttons:
 
 Custom property | Description | Default
 ----------------|-------------|----------
-`--kwc-dialog-primary-color` | Color of primary buttons | --color-kano-orange
-`--kwc-dialog-primary-hover-color` | Hover color of primary buttons | --color-kano-orange
-`--kwc-dialog-secondary-color` | Color of secondary buttons | #9fa4a8
-`--kwc-dialog-secondary-hover-color` | Hover color of secondary buttons | #9fa4a8
-`--kwc-dialog-content-wrapper` | Mixin applied to main content wrapper | {}
+`--kwc-dialog-header` | Mixin applied to the header | {}
+`--kwc-dialog-content` | Mixin applied to the main content | {}
 
 @demo demo/index.html
 -->
@@ -59,93 +45,22 @@ Custom property | Description | Default
 
                 box-shadow: 4px 4px 4px 0px rgba(0,0,0,0.15);
             }
-
+            .header {
+                @apply --kwc-dialog-header;
+            }
             .content {
                 overflow-y: scroll;
-                @apply --kwc-dialog-content-wrapper;
+                @apply --kwc-dialog-content;
             }
-
             .content * {
                 @apply --layout-flex;
             }
-
-            .toolbar {
-                border-bottom: 1px solid #eaeaea;
-                @apply --layout-flex-none;
-
-                @apply --layout-horizontal;
-
-                font-family: 'Bariol', sans-serif;
-
-                padding: 15px 20px;
-            }
-
-            .toolbar h2 {
-                margin: auto 15px auto 15px;
-                @apply --layout-flex;
-                color: var(--color-chateau, #414A51);
-                font-size: 20px;
-            }
-
-            .actions button[disabled],
-            .actions ::slotted(button[disabled]) {
-                @apply --kano-button;
-                opacity: 0.6;
-            }
-
-            .actions button.primary, .actions button.secondary,
-            .actions ::slotted(button.primary), .actions ::slotted(button.secondary) {
-                @apply --kano-button;
-                background-color: var(--kwc-dialog-secondary-color, #9fa4a8);
-                transition: all 200ms ease-in;
-                margin-left: 16px;
-                border-radius: 3px;
-            }
-
-            .actions button.primary:first-child, .actions button.secondary:first-child,
-            .actions ::slotted(button.primary:first-child), .actions ::slotted(button.secondary:first-child) {
-                margin-left: 0px;
-            }
-
-            .actions button.primary:hover,
-            .actions ::slotted(button.primary:hover) {
-                background-color: var(--kwc-dialog-primary-hover-color, #c95924);
-                color: #f0f0f0;
-            }
-
-            .actions button.secondary:hover,
-            .actions ::slotted(button.secondary:hover) {
-                background-color: var(--kwc-dialog-secondary-hover-color, #7f8386);
-                color: #f0f0f0;
-            }
-
-            .actions button.primary, .actions ::slotted(button.primary) {
-                background-color: var(--kwc-dialog-primary-color, var(--color-kano-orange));
-            }
-
-            @media only screen and (max-width: 420px) {
-                h2 {
-                    font-size: 16px;
-                }
-
-                .actions button,
-                .actions ::slotted(button.primary),
-                .actions ::slotted(button.secondary) {
-                    font-size: 12px !important;
-                    padding: 8px 15px !important;
-                }
-            }
         </style>
-        <div class="toolbar">
-            <h2>{{title}}</h2>
-            <div class="actions">
-                <slot name="actions">
-                    <button class="secondary" dialog-dismiss>Cancel</button><button class="primary" dialog-confirm>Done</button>
-                </slot>
-            </div>
+        <div class="header">
+            <slot name="header"></slot>
         </div>
         <div class="content">
-            <slot></slot>
+            <slot name="content"></slot>
         </div>
     </template>
 
@@ -169,17 +84,6 @@ Custom property | Description | Default
             behaviors: [
                 Polymer.PaperDialogBehavior
             ],
-            properties: {
-                title: {
-                    type: String
-                },
-                withBackdrop: {
-                    type: Boolean
-                },
-                modal: {
-                    type: Boolean
-                }
-            },
             _updateClosingReasonConfirmed (confirmed) {
                 Polymer.PaperDialogBehaviorImpl._updateClosingReasonConfirmed(confirmed);
                 this.fire(confirmed ? 'confirm': 'dismiss');
