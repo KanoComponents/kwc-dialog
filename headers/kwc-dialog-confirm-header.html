@@ -1,0 +1,142 @@
+<link rel="import" href="../../polymer/polymer-element.html">
+<link rel="import" href="../../kwc-style/button.html">
+<link rel="import" href="../../kwc-style/color.html">
+<link rel="import" href="../../kwc-style/typography.html">
+
+<!--
+`kwc-dialog-confirm-header` is a confirm style header with a title, confirm and dismiss button.
+
+### Examples
+
+Basic:
+
+```
+<kwc-dialog>
+    <kwc-dialog-confirm-header slot="header" title="Example dialog"></kwc-dialog-confirm-header>
+    <div slot="content">content here</div>
+</kwc-dialog>
+```
+
+With custom buttons:
+
+```
+<kwc-dialog>
+    <kwc-dialog-confirm-header slot="header" title="Example dialog">
+        <button class="primary" dialog-confirm slot="actions">Yes</button>
+        <button class="secondary" dialog-dismiss slot="actions">No</button>
+    </kwc-dialog-confirm-header>
+    <div slot="content">content here</div>
+</kwc-dialog>
+```
+
+### Styling
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--kwc-dialog-confirm-header-primary-color` | Color of primary buttons | --color-kano-orange
+`--kwc-dialog-confirm-header-primary-hover-color` | Hover color of primary buttons | --color-kano-orange
+`--kwc-dialog-confirm-header-secondary-color` | Color of secondary buttons | #9fa4a8
+`--kwc-dialog-confirm-header-secondary-hover-color` | Hover color of secondary buttons | #9fa4a8
+`--kwc-dialog-content-wrapper` | Mixin applied to main content wrapper | {}
+
+@demo demo/index.html
+-->
+
+<dom-module id="kwc-dialog-confirm-header">
+    <template>
+        <style>
+            :host {
+                border-bottom: 1px solid #eaeaea;
+                display: flex;
+                flex-direction: row;
+                font-family: 'Bariol', sans-serif;
+                padding: 15px 20px;
+            }
+
+            h2 {
+                margin: auto 15px auto 15px;
+                flex: 1;
+                color: var(--color-chateau, #414A51);
+                font-size: 20px;
+            }
+
+            .actions button[disabled],
+            .actions ::slotted(button[disabled]) {
+                @apply --kano-button;
+                opacity: 0.6;
+            }
+
+            .actions button.primary, .actions button.secondary,
+            .actions ::slotted(button.primary), .actions ::slotted(button.secondary) {
+                @apply --kano-button;
+                background-color: var(--kwc-dialog-confirm-header-secondary-color, #9fa4a8);
+                transition: all 200ms ease-in;
+                margin-left: 16px;
+                border-radius: 3px;
+            }
+
+            .actions button.primary:first-child, .actions button.secondary:first-child,
+            .actions ::slotted(button.primary:first-child), .actions ::slotted(button.secondary:first-child) {
+                margin-left: 0px;
+            }
+
+            .actions button.primary:hover,
+            .actions ::slotted(button.primary:hover) {
+                background-color: var(--kwc-dialog-confirm-header-primary-hover-color, #c95924);
+                color: #f0f0f0;
+            }
+
+            .actions button.secondary:hover,
+            .actions ::slotted(button.secondary:hover) {
+                background-color: var(--kwc-dialog-confirm-header-secondary-hover-color, #7f8386);
+                color: #f0f0f0;
+            }
+
+            .actions button.primary, .actions ::slotted(button.primary) {
+                background-color: var(--kwc-dialog-confirm-header-primary-color, var(--color-kano-orange));
+            }
+
+            @media only screen and (max-width: 420px) {
+                h2 {
+                    font-size: 16px;
+                }
+
+                .actions button,
+                .actions ::slotted(button.primary),
+                .actions ::slotted(button.secondary) {
+                    font-size: 12px !important;
+                    padding: 8px 15px !important;
+                }
+            }
+        </style>
+        <h2>[[title]]</h2>
+        <div class="actions">
+            <slot name="actions">
+                <button class="secondary" dialog-dismiss>[[dismissLabel]]</button>
+                <button class="primary" dialog-confirm>[[confirmLabel]]</button>
+            </slot>
+        </div>
+    </template>
+</dom-module>
+<script>
+    class KWCDialogConfirmHeader extends Polymer.Element {
+        static get is() { return 'kwc-dialog-confirm-header'; }
+        static get properties() {
+            return {
+                title: {
+                    type: String,
+                },
+                dismissLabel: {
+                    type: String,
+                    value: 'Cancel',
+                },
+                confirmLabel: {
+                    type: String,
+                    value: 'Done',
+                },
+            };
+        }
+    }
+
+    customElements.define(KWCDialogConfirmHeader.is, KWCDialogConfirmHeader);
+</script>

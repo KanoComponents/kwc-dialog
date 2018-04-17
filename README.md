@@ -2,7 +2,7 @@ _[Demo and API docs](https://components.kano.me/#/elements/kwc-dialog)_
 
 ## \<kwc-dialog\>
 
-A customizable dialog with two buttons and slottable content.
+A Kano styled dialog with set of predefined headers to choose from.
 
 <img width="825" alt="screen shot 2017-11-27 at 11 28 32" src="https://user-images.githubusercontent.com/169328/33264684-8408927c-d366-11e7-9099-c4f484503c09.png">
 

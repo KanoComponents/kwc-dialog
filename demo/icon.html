@@ -17,6 +17,7 @@
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
     <link rel="import" href="../kwc-dialog.html">
+    <link rel="import" href="../headers/kwc-dialog-icon-header.html">
 
     <custom-style>
         <style is="custom-style" include="demo-pages-shared-styles"></style>
@@ -25,20 +26,22 @@
 
 <body>
     <div class="vertical-section-container centered">
-        <h3>Basic kwc-dialog demo</h3>
+        <h3>Basic demo</h3>
         <demo-snippet>
             <template>
-                <style is="custom-style">
-                    .dialog-content {
-                        background: #eaeaea;
-                        height: 700px;
-                        margin: 20px;
-                    }
-                </style>
+                <custom-style>
+                    <style is="custom-style">
+                        .dialog-content {
+                            background: #eaeaea;
+                            height: 700px;
+                            margin: 20px;
+                        }
+                    </style>
+                </custom-style>
                 <button id="toggle1">Toggle dialog</button>
-                <kwc-dialog id="dialog1" title="Example dialog" with-backdrop>
-                    <div class="dialog-content">
-                    </div>
+                <kwc-dialog id="dialog1" with-backdrop>
+                    <kwc-dialog-icon-header motif="./assets/judoka-face.svg" slot="header"></kwc-dialog-icon-header>
+                    <div class="dialog-content" slot="content"></div>
                 </kwc-dialog>
 
                 <script type="text/javascript">
