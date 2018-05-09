@@ -22,7 +22,7 @@
       suite('kwc-dialog', function() {
         test('instantiating the element works', function() {
           var element = fixture('basic');
-          assert.equal(element.is, 'kwc-dialog');
+          assert.instanceOf(element, KWCDialog);
         });
       });
     </script>
